@@ -4,7 +4,7 @@
   "description": "small side project practicing authentication fundamentals in nodejs",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
