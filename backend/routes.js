@@ -1,7 +1,11 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
+const dotenv = require('dotenv');
 
 let users = [];
+
+const jwtSecret = process.env.JWT_SECRET_KEY;
 
 router.post('/register', (req, res) => {
   const { username, password, name, college, yearOfGraduation } = req.body;
@@ -26,6 +30,21 @@ router.get('/users', (req, res) => {
         return usersWithoutPw;
     })
     res.json(getUsers);
+});
+
+router.put('/users', (req, res) => {
+  const { username, password, name, college, yearOfGraduation } = req.body;
+
+  const user = users.find(user => user.username === username && user.password === password);
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid username or password' });
+  }
+
+  user.name = name || user.name;
+  user.college = college || user.college;
+  user.yearOfGraduation = yearOfGraduation || user.yearOfGraduation;
+
+  res.status(200).json({ message: 'User details updated successfully' });
 });
 
 
